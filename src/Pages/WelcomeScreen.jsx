@@ -104,19 +104,7 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
           
           <div className="relative min-h-screen flex items-center justify-center px-4">
             <div className="w-full max-w-4xl mx-auto">
-              {/* Icons
-              <motion.div 
-                className="flex justify-center gap-3 sm:gap-4 md:gap-8 mb-6 sm:mb-8 md:mb-12"
-                variants={childVariants}
-              >
-                {[Code2, User, Github].map((Icon, index) => (
-                  <div key={index} data-aos="fade-down" data-aos-delay={index * 200}>
-                    <IconButton Icon={Icon} />
-                  </div>
-                ))}
-              </motion.div> */}
-
-              {/* Welcome Text */}
+              
               <motion.div 
                 className="text-center mb-6 sm:mb-8 md:mb-12"
                 variants={childVariants}
@@ -163,20 +151,7 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
                 data-aos="fade-up"
                 data-aos-delay="1200"
               >
-                {/* <a
-                  href="https://www.eki.my.id"
-                  className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-full relative group hover:scale-105 transition-transform duration-300"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/20 to-purple-600/20 rounded-full blur-md group-hover:blur-lg transition-all duration-300" />
-                  <div className="relative flex items-center gap-2 text-lg sm:text-xl md:text-2xl">
-                    <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600" />
-                    <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                      <TypewriterEffect text="www.eki.my.id" />
-                    </span>
-                  </div>
-                </a> */}
+               
               </motion.div>
             </div>
           </div>

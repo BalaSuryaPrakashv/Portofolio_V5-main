@@ -34,8 +34,8 @@ const LandingPage = ({ showWelcome, setShowWelcome }) => {
               <hr className="my-3 border-gray-400 opacity-15 sm:mx-auto lg:my-6 text-center" />
               <span className="block text-sm pb-4 text-gray-500 text-center dark:text-gray-400">
                 © 2025{" "}
-                <a href="https://flowbite.com/" className="hover:underline">
-                  Surya
+                <a href="https://balasuryaprakashvportfolio.netlify.app/" className="hover:underline">
+                  Bala Surya Prakash V
                 </a>
                 . All Rights Reserved.
               </span>
@@ -55,8 +55,8 @@ const ProjectPageLayout = () => (
         <hr className="my-3 border-gray-400 opacity-15 sm:mx-auto lg:my-6 text-center" />
         <span className="block text-sm pb-4 text-gray-500 text-center dark:text-gray-400">
           © 2025{" "}
-          <a href="https://flowbite.com/" className="hover:underline">
-            Surya
+          <a href="https://balasuryaprakashvportfolio.netlify.app/" className="hover:underline">
+            Bala Surya Prakash V
           </a>
           . All Rights Reserved.
         </span>

@@ -295,6 +295,20 @@ const Komentar = () => {
         AOS.init({ once: false, duration: 1000 });
     }, []);
 
+    // ✅ Extracted fetchComments so it can be reused anywhere
+    const fetchComments = useCallback(async () => {
+        const { data, error } = await supabase
+            .from('portfolio_comments')
+            .select('*')
+            .eq('is_pinned', false)
+            .order('created_at', { ascending: false });
+        if (error) {
+            console.error('Error fetching comments:', error);
+            return;
+        }
+        setComments(data || []);
+    }, []);
+
     useEffect(() => {
         const fetchPinnedComment = async () => {
             try {
@@ -316,18 +330,10 @@ const Komentar = () => {
     }, []);
 
     useEffect(() => {
-        const fetchComments = async () => {
-            const { data, error } = await supabase
-                .from('portfolio_comments')
-                .select('*')
-                .eq('is_pinned', false)
-                .order('created_at', { ascending: false });
-            if (error) { console.error('Error fetching comments:', error); return; }
-            setComments(data || []);
-        };
-
+        // Initial fetch
         fetchComments();
 
+        // Realtime subscription
         const subscription = supabase
             .channel('portfolio_comments')
             .on('postgres_changes',
@@ -337,7 +343,7 @@ const Komentar = () => {
             .subscribe();
 
         return () => { subscription.unsubscribe(); };
-    }, []);
+    }, [fetchComments]);
 
     const uploadImage = useCallback(async (imageFile) => {
         if (!imageFile) return null;
@@ -398,11 +404,12 @@ const Komentar = () => {
         }
     }, [uploadImage]);
 
+    // ✅ FIXED: Now re-fetches from Supabase after delete to confirm it actually worked
     const handleClearAllConfirm = useCallback(async () => {
         setShowClearModal(false);
 
         const snapshot = [...comments];
-        setComments([]);
+        setComments([]); // Optimistically clear UI
 
         try {
             const { error } = await supabase
@@ -412,6 +419,10 @@ const Komentar = () => {
 
             if (error) throw error;
 
+            // ✅ Re-fetch from DB to confirm deletion persisted
+            await fetchComments();
+
+            // Cleanup storage images
             const imageUrls = snapshot
                 .filter(c => c.profile_image)
                 .map(c => {
@@ -429,10 +440,11 @@ const Komentar = () => {
 
         } catch (err) {
             console.error('Clear all failed:', err);
+            // ✅ Restore snapshot if delete failed
             setComments(snapshot);
-            setError('Failed to clear comments. Please try again.');
+            setError('Failed to clear comments. Please check your Supabase RLS DELETE policy.');
         }
-    }, [comments]);
+    }, [comments, fetchComments]);
 
     const formatDate = useCallback((timestamp) => {
         if (!timestamp) return '';

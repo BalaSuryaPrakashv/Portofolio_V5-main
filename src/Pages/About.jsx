@@ -35,7 +35,6 @@ const ProfileImage = memo(() => (
       data-aos="fade-up"
       data-aos-duration="1000"
     >
-      {/* Optimized gradient backgrounds with reduced complexity for mobile */}
       <div className="absolute -inset-6 opacity-[25%] z-0 hidden sm:block">
         <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-indigo-500 to-purple-600 rounded-full blur-2xl animate-spin-slower" />
         <div className="absolute inset-0 bg-gradient-to-l from-fuchsia-500 via-rose-500 to-pink-600 rounded-full blur-2xl animate-pulse-slow opacity-50" />
@@ -46,7 +45,6 @@ const ProfileImage = memo(() => (
         <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-full overflow-hidden shadow-[0_0_40px_rgba(120,119,198,0.3)] transform transition-all duration-700 group-hover:scale-105">
           <div className="absolute inset-0 border-4 border-white/20 rounded-full z-20 transition-all duration-700 group-hover:border-white/40 group-hover:scale-105" />
           
-          {/* Optimized overlay effects - disabled on mobile */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-10 transition-opacity duration-700 group-hover:opacity-0 hidden sm:block" />
           <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 via-transparent to-blue-500/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden sm:block" />
           
@@ -57,7 +55,6 @@ const ProfileImage = memo(() => (
             loading="lazy"
           />
 
-          {/* Advanced hover effects - desktop only */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700 z-20 hidden sm:block">
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-white/10 to-transparent transform translate-y-full group-hover:-translate-y-full transition-transform duration-1000 delay-100" />
@@ -114,11 +111,9 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
 ));
 
 const AboutPage = () => {
-  // State for Supabase counts
   const [totalProjects, setTotalProjects] = useState(0);
   const [totalCertificates, setTotalCertificates] = useState(0);
 
-  // Calculate years of experience (static calc, useMemo is fine here)
   const YearExperience = useMemo(() => {
     const startDate = new Date("2021-11-06");
     const today = new Date();
@@ -126,7 +121,6 @@ const AboutPage = () => {
       (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
   }, []);
 
-  // Fetch counts from Supabase
   useEffect(() => {
     async function fetchCounts() {
       const { count: certCount } = await supabase
@@ -143,17 +137,13 @@ const AboutPage = () => {
     fetchCounts();
   }, []);
 
-  // Optimized AOS initialization
   useEffect(() => {
     const initAOS = () => {
-      AOS.init({
-        once: false, 
-      });
+      AOS.init({ once: false });
     };
 
     initAOS();
     
-    // Debounced resize handler
     let resizeTimer;
     const handleResize = () => {
       clearTimeout(resizeTimer);
@@ -167,7 +157,6 @@ const AboutPage = () => {
     };
   }, []);
 
-  // Memoized stats data
   const statsData = useMemo(() => [
     {
       icon: Code,
@@ -196,13 +185,15 @@ const AboutPage = () => {
   ], [totalProjects, totalCertificates, YearExperience]);
 
   return (
+    // ✅ FIX 1: removed "mt-10 sm:mt-0" to eliminate top gap
     <div
-      className="h-auto pb-[10%] text-white overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%] mt-10 sm-mt-0" 
+      className="h-auto pb-6 text-white overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%]"
       id="About"
     >
       <Header />
 
-      <div className="w-full mx-auto pt-8 sm:pt-12 relative">
+      {/* ✅ FIX 2: reduced pt-8 sm:pt-12 → pt-4 sm:pt-6 to tighten spacing */}
+      <div className="w-full mx-auto pt-4 sm:pt-6 relative">
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="space-y-6 text-center lg:text-left">
             <h2 
@@ -244,11 +235,9 @@ const AboutPage = () => {
               data-aos="fade-up"
               data-aos-duration="1700"
             >
-              {/* Floating orbs background */}
               <div className="absolute top-2 right-4 w-16 h-16 bg-gradient-to-r from-[#6366f1]/20 to-[#a855f7]/20 rounded-full blur-xl"></div>
               <div className="absolute -bottom-4 -left-2 w-12 h-12 bg-gradient-to-r from-[#a855f7]/20 to-[#6366f1]/20 rounded-full blur-lg"></div>
               
-              {/* Quote icon */}
               <div className="absolute top-3 left-4 text-[#6366f1] opacity-30">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>

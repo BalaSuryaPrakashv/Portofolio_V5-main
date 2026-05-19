@@ -9,11 +9,10 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import CardProject from "../components/CardProject";
-import TechStackIcon from "../components/TechStackIcon";
 import Certificate from "../components/Certificate";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Code, Boxes, Award } from "lucide-react";
+import { Code, Award, Briefcase } from "lucide-react";
 
 const ToggleButton = ({ onClick, isShowingMore }) => (
   <button
@@ -77,7 +76,7 @@ function TabPanel({ children, value, index, ...other }) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: { xs: 1, sm: 3 } }}>
+        <Box sx={{ p: { xs: 1, sm: 3 }, overflow: "visible" }}>
           <Typography component="div">{children}</Typography>
         </Box>
       )}
@@ -98,21 +97,85 @@ function a11yProps(index) {
   };
 }
 
-const techStacks = [
-  { icon: "html.svg", language: "HTML" },
-  { icon: "css.svg", language: "CSS" },
-  { icon: "javascript.svg", language: "JavaScript" },
-  { icon: "tailwind.svg", language: "Tailwind CSS" },
-  { icon: "reactjs.svg", language: "ReactJS" },
-  { icon: "vite.svg", language: "Vite" },
-  { icon: "nodejs.svg", language: "Node JS" },
-  { icon: "bootstrap.svg", language: "Bootstrap" },
-  { icon: "firebase.svg", language: "Firebase" },
-  { icon: "MUI.svg", language: "Material UI" },
-  { icon: "vercel.svg", language: "Vercel" },
-  { icon: "SweetAlert.svg", language: "SweetAlert2" },
+// ── Internship data from CV ──────────────────────────────────────────────────
+const internships = [
+  {
+    id: 1,
+    role: "Data Analyst Intern",
+    company: "Nxtlogic Software Solutions",
+    location: "Gandhipuram, Coimbatore",
+    duration: "July 2025 – Aug 2025",
+    type: "Internship",
+    bullets: [
+      "Cleaned, preprocessed, and analyzed structured datasets to extract actionable business insights for real-world projects.",
+      "Built and evaluated ML models (classification & regression), iteratively tuning parameters to improve prediction accuracy.",
+      "Automated repetitive data workflows using Python scripts, reducing manual effort and improving team efficiency.",
+      "Identified and resolved data quality issues including missing values, duplicates, and inconsistencies to enhance data reliability.",
+    ],
+    skills: ["Python", "Pandas", "Scikit-learn", "SQL", "EDA", "Data Cleaning", "ML Models", "Automation"],
+  },
 ];
 
+// ── Internship Card Component ────────────────────────────────────────────────
+const InternshipCard = ({ internship, index }) => (
+  <div
+    data-aos="fade-up"
+    data-aos-duration={800 + index * 200}
+    className="relative group w-full"
+  >
+    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl opacity-0 group-hover:opacity-30 blur transition-all duration-500" />
+
+    <div className="relative bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 backdrop-blur-sm hover:border-white/20 transition-all duration-300">
+
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-5">
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#6366f1] to-[#a855f7] flex items-center justify-center flex-shrink-0 shadow-lg">
+            <Briefcase className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h3 className="text-lg sm:text-xl font-bold text-white">{internship.role}</h3>
+            <p className="text-[#a855f7] font-semibold text-sm sm:text-base">{internship.company}</p>
+            <p className="text-gray-400 text-xs sm:text-sm mt-0.5">{internship.location}</p>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-start sm:items-end gap-2 flex-shrink-0">
+          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#6366f1]/20 text-[#a78bfa] border border-[#6366f1]/30">
+            {internship.type}
+          </span>
+          <span className="text-gray-400 text-xs sm:text-sm">{internship.duration}</span>
+        </div>
+      </div>
+
+      <div className="h-px bg-gradient-to-r from-[#6366f1]/30 via-white/10 to-transparent mb-5" />
+
+      <ul className="space-y-3 mb-6">
+        {internship.bullets.map((point, i) => (
+          <li key={i} className="flex items-start gap-3 text-gray-300 text-sm leading-relaxed">
+            <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#6366f1] to-[#a855f7] flex-shrink-0" />
+            {point}
+          </li>
+        ))}
+      </ul>
+
+      <div>
+        <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-semibold">Skills Used</p>
+        <div className="flex flex-wrap gap-2">
+          {internship.skills.map((skill, i) => (
+            <span
+              key={i}
+              className="px-2.5 py-1 text-xs rounded-lg bg-white/5 border border-white/10 text-gray-300 hover:border-[#6366f1]/50 hover:text-white transition-all duration-200"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ── Main Component ────────────────────────────────────────────────────────────
 export default function FullWidthTabs() {
   const theme = useTheme();
   const [value, setValue] = useState(0);
@@ -147,8 +210,6 @@ export default function FullWidthTabs() {
         .from("certificates")
         .select("*")
         .order("issued_date", { ascending: false });
-      console.log("Certificates data:", data);
-      console.log("Certificates error:", error);
       if (error) throw error;
       setCertificates(data || []);
     } catch (error) {
@@ -172,10 +233,11 @@ export default function FullWidthTabs() {
 
   return (
     <div
-      className="md:px-[10%] px-[5%] w-full sm:mt-0 mt-[3rem] bg-[#030014] overflow-hidden"
+      className="md:px-[10%] px-[5%] w-full bg-[#030014] pt-4 pb-32"
       id="Portofolio"
     >
-      <div className="text-center pb-10" data-aos="fade-up" data-aos-duration="1000">
+      {/* Section heading */}
+      <div className="text-center pb-6" data-aos="fade-up" data-aos-duration="1000">
         <h2 className="inline-block text-3xl md:text-5xl font-bold text-center mx-auto text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
           <span
             style={{
@@ -225,7 +287,7 @@ export default function FullWidthTabs() {
             sx={{
               minHeight: "70px",
               "& .MuiTab-root": {
-                fontSize: { xs: "0.9rem", md: "1rem" },
+                fontSize: { xs: "0.75rem", md: "1rem" },
                 fontWeight: "600",
                 color: "#94a3b8",
                 textTransform: "none",
@@ -247,35 +309,45 @@ export default function FullWidthTabs() {
                 },
               },
               "& .MuiTabs-indicator": { height: 0 },
-              "& .MuiTabs-flexContainer": { gap: "8px" },
+              "& .MuiTabs-flexContainer": { gap: "4px" },
             }}
           >
-            <Tab icon={<Code className="mb-2 w-5 h-5 transition-all duration-300" />} label="Projects" {...a11yProps(0)} />
-            <Tab icon={<Award className="mb-2 w-5 h-5 transition-all duration-300" />} label="Certificates" {...a11yProps(1)} />
-            <Tab icon={<Boxes className="mb-2 w-5 h-5 transition-all duration-300" />} label="Tech Stack" {...a11yProps(2)} />
+            <Tab icon={<Code className="mb-1 w-5 h-5 transition-all duration-300" />} label="Projects" {...a11yProps(0)} />
+            <Tab icon={<Briefcase className="mb-1 w-5 h-5 transition-all duration-300" />} label="Internship" {...a11yProps(1)} />
+            <Tab icon={<Award className="mb-1 w-5 h-5 transition-all duration-300" />} label="Certificates" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
 
+        <style>{`
+          .react-swipeable-view-container { overflow: visible !important; }
+          .react-swipeable-view-container > div { overflow: visible !important; }
+        `}</style>
         <SwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={value}
           onChangeIndex={setValue}
+          style={{ overflow: "visible" }}
+          containerStyle={{ overflow: "visible" }}
+          slideStyle={{ overflow: "visible" }}
+          disabled={true}
         >
-          {/* Projects Tab */}
+          {/* ── Projects Tab ── */}
           <TabPanel value={value} index={0} dir={theme.direction}>
-            <div className="container mx-auto flex justify-center items-center overflow-hidden">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
+            <div className="container mx-auto flex justify-center items-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5 items-stretch w-full">
                 {displayedProjects.map((project, index) => (
                   <div
                     key={project.id || index}
                     data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
                     data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
+                    className="h-full"
                   >
                     <CardProject
                       Img={project.Img}
                       Title={project.Title}
                       Description={project.Description}
                       Link={project.Link}
+                      Demo={project.Demo || project.demo}
                       id={project.id}
                     />
                   </div>
@@ -289,10 +361,31 @@ export default function FullWidthTabs() {
             )}
           </TabPanel>
 
-          {/* Certificates Tab */}
+          {/* ── Internship Tab ── */}
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <div className="container mx-auto flex justify-center items-center overflow-hidden">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="container mx-auto max-w-4xl flex flex-col gap-6 pb-2">
+              <div className="flex items-center gap-3 mb-2" data-aos="fade-up" data-aos-duration="600">
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#6366f1]/40 to-transparent" />
+                <span className="text-xs text-gray-500 uppercase tracking-widest font-semibold px-2">Experience</span>
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#a855f7]/40 to-transparent" />
+              </div>
+
+              {internships.map((internship, index) => (
+                <InternshipCard key={internship.id} internship={internship} index={index} />
+              ))}
+
+              <div className="text-center mt-4" data-aos="fade-up" data-aos-duration="1000">
+                <p className="text-gray-500 text-sm italic">
+                  Open to full-time roles & new internship opportunities 🚀
+                </p>
+              </div>
+            </div>
+          </TabPanel>
+
+          {/* ── Certificates Tab ── */}
+          <TabPanel value={value} index={2} dir={theme.direction}>
+            <div className="container mx-auto flex justify-center items-center">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full">
                 {displayedCertificates.map((cert, index) => (
                   <div
                     key={cert.id || index}
@@ -317,23 +410,6 @@ export default function FullWidthTabs() {
                 <ToggleButton onClick={() => setShowAllCertificates(p => !p)} isShowingMore={showAllCertificates} />
               </div>
             )}
-          </TabPanel>
-
-          {/* Tech Stack Tab */}
-          <TabPanel value={value} index={2} dir={theme.direction}>
-            <div className="container mx-auto flex justify-center items-center overflow-hidden pb-[5%]">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-8 gap-5">
-                {techStacks.map((stack, index) => (
-                  <div
-                    key={index}
-                    data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
-                    data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
-                  >
-                    <TechStackIcon TechStackIcon={stack.icon} Language={stack.language} />
-                  </div>
-                ))}
-              </div>
-            </div>
           </TabPanel>
         </SwipeableViews>
       </Box>

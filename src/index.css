@@ -16,8 +16,16 @@
 html,
 body {
 	overflow-x: hidden;
+	width :100%;
+	max-width: 100%;
 	background: #030014;
 	scroll-behavior: smooth !important;
+}
+
+#root {
+	overflow-x:hidden ;
+	width: 100%;
+	height: 100%;
 }
 
 @keyframes blob {
