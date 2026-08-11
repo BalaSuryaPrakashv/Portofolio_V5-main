@@ -107,14 +107,14 @@ const internships = [
     duration: "July 2026 – Present",
     type: "Full-time",
     bullets: [
-      "Working on Clarity ERP and SAP ERP for business data management and operational processes.",
+      "Working on Clarity ERP and SAP for business data management and operational processes.",
       "Collecting, validating, and analyzing business data to ensure accuracy, completeness, and consistency.",
       "Monitoring data quality, identifying inconsistencies, and resolving data-related issues.",
       "Creating, maintaining, and enhancing dashboards and data visualizations using Excel, Power BI, Clarity ERP, and SAP.",
       "Preparing business reports and performance metrics to support operational decision-making.",
       "Collaborating with cross-functional teams to resolve data discrepancies and improve business workflows.",
     ],
-    skills: ["Data Analysis", "Microsoft Excel", "Power BI", "SAP ERP", "Clarity ERP"],
+    skills: ["Data Analysis", "Microsoft Excel", "Power BI", "SAP", "Clarity ERP"],
   },
   {
     id: 1,
@@ -331,7 +331,7 @@ export default function FullWidthTabs() {
             }}
           >
             <Tab icon={<Code className="mb-1 w-5 h-5 transition-all duration-300" />} label="Projects" {...a11yProps(0)} />
-            <Tab icon={<Briefcase className="mb-1 w-5 h-5 transition-all duration-300" />} label="Internship" {...a11yProps(1)} />
+            <Tab icon={<Briefcase className="mb-1 w-5 h-5 transition-all duration-300" />} label="Experience" {...a11yProps(1)} />
             <Tab icon={<Award className="mb-1 w-5 h-5 transition-all duration-300" />} label="Certificates" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
@@ -382,19 +382,13 @@ export default function FullWidthTabs() {
           {/* ── Internship Tab ── */}
           <TabPanel value={value} index={1} dir={theme.direction}>
             <div className="container mx-auto max-w-4xl flex flex-col gap-6 pb-2">
-              <div className="flex items-center gap-3 mb-2" data-aos="fade-up" data-aos-duration="600">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#6366f1]/40 to-transparent" />
-                <span className="text-xs text-gray-500 uppercase tracking-widest font-semibold px-2">Experience</span>
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#a855f7]/40 to-transparent" />
-              </div>
-
               {internships.map((internship, index) => (
                 <InternshipCard key={internship.id} internship={internship} index={index} />
               ))}
 
               <div className="text-center mt-4" data-aos="fade-up" data-aos-duration="1000">
                 <p className="text-gray-500 text-sm italic">
-                  Open to full-time roles & new internship opportunities 🚀
+                  Open to new opportunities & collaborations 🚀
                 </p>
               </div>
             </div>
