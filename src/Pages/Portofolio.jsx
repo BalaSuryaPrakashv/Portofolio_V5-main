@@ -100,6 +100,23 @@ function a11yProps(index) {
 // ── Internship data from CV ──────────────────────────────────────────────────
 const internships = [
   {
+    id: 2,
+    role: "Executive Analyst",
+    company: "Focusprism Private Limited",
+    location: "Hyderabad, Telangana, India",
+    duration: "July 2026 – Present",
+    type: "Full-time",
+    bullets: [
+      "Working on Clarity ERP and SAP ERP for business data management and operational processes.",
+      "Collecting, validating, and analyzing business data to ensure accuracy, completeness, and consistency.",
+      "Monitoring data quality, identifying inconsistencies, and resolving data-related issues.",
+      "Creating, maintaining, and enhancing dashboards and data visualizations using Excel, Power BI, Clarity ERP, and SAP.",
+      "Preparing business reports and performance metrics to support operational decision-making.",
+      "Collaborating with cross-functional teams to resolve data discrepancies and improve business workflows.",
+    ],
+    skills: ["Data Analysis", "Microsoft Excel", "Power BI", "SAP ERP", "Clarity ERP"],
+  },
+  {
     id: 1,
     role: "Data Analyst Intern",
     company: "Nxtlogic Software Solutions",
@@ -115,6 +132,7 @@ const internships = [
     skills: ["Python", "Pandas", "Scikit-learn", "SQL", "EDA", "Data Cleaning", "ML Models", "Automation"],
   },
 ];
+
 
 // ── Internship Card Component ────────────────────────────────────────────────
 const InternshipCard = ({ internship, index }) => (
