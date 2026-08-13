@@ -137,6 +137,7 @@ const internships = [
   },
 ];
 
+
 // ── Internship Card Component ────────────────────────────────────────────────
 const InternshipCard = ({ internship, index }) => (
   <div
