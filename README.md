@@ -5,7 +5,7 @@ Hello everyone! 👋 Let me introduce myself, I'm **Bala Surya Prakash V**. On t
 
 ## 🚀 Live Demo
 
-**Website Link:** [https://balasuryaprakashvportfolio.netlify.app/](https://balasuryaprakashvportfolio.netlify.app/)
+**Website Link:** [https://portofolio-v5-main.vercel.app](https://portofolio-v5-main.vercel.app)
 
 ##  Tech Stack
 
@@ -58,7 +58,7 @@ npm run dev
 
 ### 4\. Open in Browser
 
-Access the application through the link displayed in your terminal (usually `http://localhost:5173`).
+Access the application through the link displayed in your terminal (usually `http://localhost:5174`).
 
 ## Building for Production
 
@@ -217,7 +217,7 @@ If you encounter issues while running the project:
 If you have any questions or need help with the setup, feel free to reach out!
 
 **Bala Surya Prakash V**
-- Website: [https://balasuryaprakashvportfolio.netlify.app/](https://balasuryaprakashvportfolio.netlify.app/)
+- Website: [https://portofolio-v5-main.vercel.app](https://portofolio-v5-main.vercel.app)
 - GitHub: [BalaSuryaPrakashv](https://github.com/BalaSuryaPrakashv)
 - LinkedIn: [v-bala-surya-prakash](https://www.linkedin.com/in/v-bala-surya-prakash)
 

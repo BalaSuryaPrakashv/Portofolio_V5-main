@@ -13,6 +13,8 @@ import Certificate from "../components/Certificate";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Code, Award, Briefcase } from "lucide-react";
+import focusprismLogo from "../assets/focusprism-logo.jpeg";
+import nxtlogicLogo from "../assets/nxtlogic-logo.jpeg";
 
 const ToggleButton = ({ onClick, isShowingMore }) => (
   <button
@@ -100,9 +102,28 @@ function a11yProps(index) {
 // ── Internship data from CV ──────────────────────────────────────────────────
 const internships = [
   {
+    id: 2,
+    role: "Executive Analyst",
+    company: "Focusprism Private Limited",
+    logo: focusprismLogo,
+    location: "Hyderabad, Telangana, India",
+    duration: "July 2026 – Present",
+    type: "Full-time",
+    bullets: [
+      "Working on Clarity ERP and SAP for business data management and operational processes.",
+      "Collecting, validating, and analyzing business data to ensure accuracy, completeness, and consistency.",
+      "Monitoring data quality, identifying inconsistencies, and resolving data-related issues.",
+      "Creating, maintaining, and enhancing dashboards and data visualizations using Excel, Power BI, Clarity ERP, and SAP.",
+      "Preparing business reports and performance metrics to support operational decision-making.",
+      "Collaborating with cross-functional teams to resolve data discrepancies and improve business workflows.",
+    ],
+    skills: ["Data Analysis", "Microsoft Excel", "Power BI", "SAP", "Clarity ERP"],
+  },
+  {
     id: 1,
     role: "Data Analyst Intern",
     company: "Nxtlogic Software Solutions",
+    logo: nxtlogicLogo,
     location: "Gandhipuram, Coimbatore",
     duration: "July 2025 – Aug 2025",
     type: "Internship",
@@ -125,50 +146,63 @@ const InternshipCard = ({ internship, index }) => (
   >
     <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-2xl opacity-0 group-hover:opacity-30 blur transition-all duration-500" />
 
-    <div className="relative bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 backdrop-blur-sm hover:border-white/20 transition-all duration-300">
+    <div className="relative bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 backdrop-blur-sm hover:border-white/20 transition-all duration-300 overflow-hidden">
 
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-5">
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#6366f1] to-[#a855f7] flex items-center justify-center flex-shrink-0 shadow-lg">
-            <Briefcase className="w-6 h-6 text-white" />
+      {/* Content */}
+      <div className="relative z-10">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-5">
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center flex-shrink-0 shadow-lg overflow-hidden">
+              {internship.logo ? (
+                <img
+                  src={internship.logo}
+                  alt={`${internship.company} logo`}
+                  className="w-full h-full object-contain p-1"
+                />
+              ) : (
+                <div className="w-full h-full rounded-xl bg-gradient-to-br from-[#6366f1] to-[#a855f7] flex items-center justify-center">
+                  <Briefcase className="w-6 h-6 text-white" />
+                </div>
+              )}
+            </div>
+            <div>
+              <h3 className="text-lg sm:text-xl font-bold text-white">{internship.role}</h3>
+              <p className="text-[#a855f7] font-semibold text-sm sm:text-base">{internship.company}</p>
+              <p className="text-gray-400 text-xs sm:text-sm mt-0.5">{internship.location}</p>
+            </div>
           </div>
-          <div>
-            <h3 className="text-lg sm:text-xl font-bold text-white">{internship.role}</h3>
-            <p className="text-[#a855f7] font-semibold text-sm sm:text-base">{internship.company}</p>
-            <p className="text-gray-400 text-xs sm:text-sm mt-0.5">{internship.location}</p>
-          </div>
-        </div>
 
-        <div className="flex flex-col items-start sm:items-end gap-2 flex-shrink-0">
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#6366f1]/20 text-[#a78bfa] border border-[#6366f1]/30">
-            {internship.type}
-          </span>
-          <span className="text-gray-400 text-xs sm:text-sm">{internship.duration}</span>
-        </div>
-      </div>
-
-      <div className="h-px bg-gradient-to-r from-[#6366f1]/30 via-white/10 to-transparent mb-5" />
-
-      <ul className="space-y-3 mb-6">
-        {internship.bullets.map((point, i) => (
-          <li key={i} className="flex items-start gap-3 text-gray-300 text-sm leading-relaxed">
-            <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#6366f1] to-[#a855f7] flex-shrink-0" />
-            {point}
-          </li>
-        ))}
-      </ul>
-
-      <div>
-        <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-semibold">Skills Used</p>
-        <div className="flex flex-wrap gap-2">
-          {internship.skills.map((skill, i) => (
-            <span
-              key={i}
-              className="px-2.5 py-1 text-xs rounded-lg bg-white/5 border border-white/10 text-gray-300 hover:border-[#6366f1]/50 hover:text-white transition-all duration-200"
-            >
-              {skill}
+          <div className="flex flex-col items-start sm:items-end gap-2 flex-shrink-0">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#6366f1]/20 text-[#a78bfa] border border-[#6366f1]/30">
+              {internship.type}
             </span>
+            <span className="text-gray-400 text-xs sm:text-sm">{internship.duration}</span>
+          </div>
+        </div>
+
+        <div className="h-px bg-gradient-to-r from-[#6366f1]/30 via-white/10 to-transparent mb-5" />
+
+        <ul className="space-y-3 mb-6">
+          {internship.bullets.map((point, i) => (
+            <li key={i} className="flex items-start gap-3 text-gray-300 text-sm leading-relaxed">
+              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#6366f1] to-[#a855f7] flex-shrink-0" />
+              {point}
+            </li>
           ))}
+        </ul>
+
+        <div>
+          <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-semibold">Skills Used</p>
+          <div className="flex flex-wrap gap-2">
+            {internship.skills.map((skill, i) => (
+              <span
+                key={i}
+                className="px-2.5 py-1 text-xs rounded-lg bg-white/5 border border-white/10 text-gray-300 hover:border-[#6366f1]/50 hover:text-white transition-all duration-200"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -313,7 +347,7 @@ export default function FullWidthTabs() {
             }}
           >
             <Tab icon={<Code className="mb-1 w-5 h-5 transition-all duration-300" />} label="Projects" {...a11yProps(0)} />
-            <Tab icon={<Briefcase className="mb-1 w-5 h-5 transition-all duration-300" />} label="Internship" {...a11yProps(1)} />
+            <Tab icon={<Briefcase className="mb-1 w-5 h-5 transition-all duration-300" />} label="Experience" {...a11yProps(1)} />
             <Tab icon={<Award className="mb-1 w-5 h-5 transition-all duration-300" />} label="Certificates" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
@@ -364,19 +398,13 @@ export default function FullWidthTabs() {
           {/* ── Internship Tab ── */}
           <TabPanel value={value} index={1} dir={theme.direction}>
             <div className="container mx-auto max-w-4xl flex flex-col gap-6 pb-2">
-              <div className="flex items-center gap-3 mb-2" data-aos="fade-up" data-aos-duration="600">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#6366f1]/40 to-transparent" />
-                <span className="text-xs text-gray-500 uppercase tracking-widest font-semibold px-2">Experience</span>
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#a855f7]/40 to-transparent" />
-              </div>
-
               {internships.map((internship, index) => (
                 <InternshipCard key={internship.id} internship={internship} index={index} />
               ))}
 
               <div className="text-center mt-4" data-aos="fade-up" data-aos-duration="1000">
                 <p className="text-gray-500 text-sm italic">
-                  Open to full-time roles & new internship opportunities 🚀
+                  Open to new opportunities & collaborations 🚀
                 </p>
               </div>
             </div>
