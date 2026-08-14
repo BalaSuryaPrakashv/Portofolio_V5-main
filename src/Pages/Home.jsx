@@ -71,8 +71,8 @@ const SocialLink = memo(({ icon: Icon, link }) => (
 const TYPING_SPEED = 100;
 const ERASING_SPEED = 50;
 const PAUSE_DURATION = 2000;
-const WORDS = ["Statistical Analysis", "Data Analyst", "Machine learning", "Software Development"];
-const TECH_STACK = ["SQL", "Java", "Python", "c", "React"];
+const WORDS = ["Statistical Analysis", "Data Analyst", "Machine learning", "Data Visualization", "Data Analytics"];
+const TECH_STACK = ["SQL", "SAP", "Python", "Clarity ERP", "Power BI", "Tableau", "Excel"];
 const SOCIAL_LINKS = [
   { icon: Github, link: "https://github.com/BalaSuryaPrakashv" },
   { icon: Linkedin, link: "http://www.linkedin.com/in/v-bala-surya-prakash" },

@@ -8,13 +8,18 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Backdrop from "@mui/material/Backdrop";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import CardProject from "../components/CardProject";
 import Certificate from "../components/Certificate";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Code, Award, Briefcase } from "lucide-react";
+import { Code, Award, Briefcase, FileCheck } from "lucide-react";
 import focusprismLogo from "../assets/focusprism-logo.jpeg";
 import nxtlogicLogo from "../assets/nxtlogic-logo.jpeg";
+import nxtlogicCertificate from "../assets/nxtlogic-certificate.jpeg";
 
 const ToggleButton = ({ onClick, isShowingMore }) => (
   <button
@@ -99,6 +104,74 @@ function a11yProps(index) {
   };
 }
 
+// ── Certificate Modal (same style/behavior as components/Certificate.jsx) ────
+const CertificateModal = ({ open, onClose, imgSrc }) => (
+  <Modal
+    open={open}
+    onClose={onClose}
+    aria-labelledby="certificate-modal-title"
+    BackdropComponent={Backdrop}
+    BackdropProps={{
+      timeout: 300,
+      sx: {
+        backgroundColor: "rgba(0, 0, 0, 0.9)",
+        backdropFilter: "blur(5px)",
+      },
+    }}
+    sx={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      margin: 0,
+      padding: 0,
+    }}
+  >
+    <Box
+      sx={{
+        position: "relative",
+        width: "auto",
+        maxWidth: "90vw",
+        maxHeight: "90vh",
+        m: 0,
+        p: 0,
+        outline: "none",
+      }}
+    >
+      <IconButton
+        onClick={onClose}
+        sx={{
+          position: "absolute",
+          right: 16,
+          top: 16,
+          color: "white",
+          bgcolor: "rgba(0,0,0,0.6)",
+          zIndex: 1,
+          padding: 1,
+          "&:hover": {
+            bgcolor: "rgba(0,0,0,0.8)",
+            transform: "scale(1.1)",
+          },
+        }}
+        size="large"
+      >
+        <CloseIcon sx={{ fontSize: 24 }} />
+      </IconButton>
+
+      <img
+        src={imgSrc}
+        alt="Certificate Full View"
+        style={{
+          display: "block",
+          maxWidth: "100%",
+          maxHeight: "90vh",
+          margin: "0 auto",
+          objectFit: "contain",
+        }}
+      />
+    </Box>
+  </Modal>
+);
+
 // ── Internship data from CV ──────────────────────────────────────────────────
 const internships = [
   {
@@ -127,6 +200,7 @@ const internships = [
     location: "Gandhipuram, Coimbatore",
     duration: "July 2025 – Aug 2025",
     type: "Internship",
+    certificateUrl: nxtlogicCertificate,
     bullets: [
       "Cleaned, preprocessed, and analyzed structured datasets to extract actionable business insights for real-world projects.",
       "Built and evaluated ML models (classification & regression), iteratively tuning parameters to improve prediction accuracy.",
@@ -139,7 +213,10 @@ const internships = [
 
 
 // ── Internship Card Component ────────────────────────────────────────────────
-const InternshipCard = ({ internship, index }) => (
+const InternshipCard = ({ internship, index }) => {
+  const [certOpen, setCertOpen] = useState(false);
+
+  return (
   <div
     data-aos="fade-up"
     data-aos-duration={800 + index * 200}
@@ -192,23 +269,56 @@ const InternshipCard = ({ internship, index }) => (
           ))}
         </ul>
 
-        <div>
-          <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-semibold">Skills Used</p>
-          <div className="flex flex-wrap gap-2">
-            {internship.skills.map((skill, i) => (
-              <span
-                key={i}
-                className="px-2.5 py-1 text-xs rounded-lg bg-white/5 border border-white/10 text-gray-300 hover:border-[#6366f1]/50 hover:text-white transition-all duration-200"
-              >
-                {skill}
-              </span>
-            ))}
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-semibold">Skills Used</p>
+            <div className="flex flex-wrap gap-2">
+              {internship.skills.map((skill, i) => (
+                <span
+                  key={i}
+                  className="px-2.5 py-1 text-xs rounded-lg bg-white/5 border border-white/10 text-gray-300 hover:border-[#6366f1]/50 hover:text-white transition-all duration-200"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
           </div>
+
+          {internship.certificateUrl && (
+            <button
+              onClick={() => setCertOpen(true)}
+              className="
+                flex items-center gap-2
+                px-3.5 py-2
+                text-sm font-medium
+                text-[#a78bfa]
+                bg-[#6366f1]/10
+                hover:bg-[#6366f1]/20
+                border border-[#6366f1]/30
+                hover:border-[#6366f1]/50
+                rounded-lg
+                transition-all duration-200
+                flex-shrink-0
+              "
+            >
+              <FileCheck className="w-4 h-4" />
+              View Certificate
+            </button>
+          )}
         </div>
       </div>
     </div>
+
+    {internship.certificateUrl && (
+      <CertificateModal
+        open={certOpen}
+        onClose={() => setCertOpen(false)}
+        imgSrc={internship.certificateUrl}
+      />
+    )}
   </div>
-);
+  );
+};
 
 // ── Main Component ────────────────────────────────────────────────────────────
 export default function FullWidthTabs() {
